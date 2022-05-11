@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-jm
+  labels:
+    component: web
+spec:
+  volumes:
+    - name: nginx-storage
+      persistentVolumeClaim:
+        claimName: database-persistent-volume-claim
+  containers:
+    - name: nginx-jm
+      image: nginx
+      ports:
+        - containerPort: 80
+      volumeMounts:
+        - name: nginx-storage
+          mountPath: /usr/share/nginx/html
+          subPath: test
